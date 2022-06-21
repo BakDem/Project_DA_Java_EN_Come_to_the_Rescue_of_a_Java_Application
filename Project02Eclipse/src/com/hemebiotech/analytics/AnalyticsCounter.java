@@ -1,6 +1,5 @@
 package com.hemebiotech.analytics;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,57 +7,63 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * AnalyticsCounter the main class for :
+ * AnalyticsCounter a class with some methods.
  * 
- * Read a file with symptom
+ * Count all symptom occurrences.
  * 
- * Count all symptom
- * 
- * and write the symptom with their occurrences on another file.
+ * write the symptom with their occurrences on a file.
  * 
  */
 public class AnalyticsCounter {
 
-	public static void main(String args[]) throws FileNotFoundException {
-		int symptomOccurrences = 0;
-		ArrayList<String> oneSymptom = new ArrayList<String>();
+	/**
+	 * Method singleSymptom make a list with only one symptom. No duplicate of
+	 * symptom Return a list with only one symptom at time.
+	 */
+	public List<String> singleSymptom(List<String> symptomsList) {
+		ArrayList<String> oneSymptomList = new ArrayList<String>();
+		for (String line : symptomsList) {
 
-		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile("symptoms.txt");
-		List<String> symptomList = reader.GetSymptoms(); // Get a list with all symptoms
-
-		Collections.sort(symptomList); // sort the list into ascending order
-
-		// make a list with only one symptom. No duplicate of symptom
-		for (String line : symptomList) {
-
-			if (!oneSymptom.contains(line)) {
-				oneSymptom.add(line);
+			if (!oneSymptomList.contains(line)) {
+				oneSymptomList.add(line);
 			}
 		}
+		return oneSymptomList;
+	}
 
-		/**
-		 * here Using FilleWriter Class to write on file
-		 * 
-		 * use ArrayList(symptomList) with all symptom and ArrayList(oneSymptom)with
-		 * only one symptom at time
-		 * 
-		 * Go through oneSymptom and count occurrences from symptomList
-		 * 
-		 * Concatenate the symptom and occurrences and write it on result.out.
-		 */
+	/**
+	 * Use ArrayList(symptomList) with all symptom and ArrayList(oneSymptom)with
+	 * only one symptom at time Go through oneSymptom and count occurrences from
+	 * symptomList
+	 */
+	public List<String> occurrencesCounter(List<String> singleSymptomList, List<String> allSymptomListe) {
+		int symptomOccurrences = 0;
+		ArrayList<String> symptomWithdOccurences = new ArrayList<String>();
+		for (String str : singleSymptomList) {
+			symptomOccurrences = Collections.frequency(allSymptomListe, str);
+			symptomWithdOccurences.add((str + " = " + symptomOccurrences + "\n"));
+		}
+		return symptomWithdOccurences;
+	}
+
+	/**
+	 * here Using FilleWriter Class to write on file Concatenate the symptom and
+	 * occurrences from a list and write it on the file.
+	 */
+	public void writeSymptomOnFile(ArrayList<String> symptomWithdOccurences, String file) {
 		try {
-			FileWriter writer = new FileWriter("result.out");
-			for (String str : oneSymptom) {
-				symptomOccurrences = Collections.frequency(symptomList, str);
-				writer.write(str + " = " + symptomOccurrences + "\n");
+			FileWriter writer = new FileWriter(file);
+
+			Collections.sort(symptomWithdOccurences);// sort the list into ascending order
+
+			for (String str : symptomWithdOccurences) {
+				writer.write(str);
 			}
 
 			writer.close();
-		} catch (
-
-		IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
+
 }
