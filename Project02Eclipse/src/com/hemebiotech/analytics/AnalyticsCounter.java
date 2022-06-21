@@ -20,7 +20,7 @@ public class AnalyticsCounter {
 	 * Method singleSymptom make a list with only one symptom. No duplicate of
 	 * symptom Return a list with only one symptom at time.
 	 */
-	public List<String> singleSymptom(List<String> symptomsList) {
+	public List<String> getSingleSymptom(List<String> symptomsList) {
 		ArrayList<String> oneSymptomList = new ArrayList<String>();
 		for (String line : symptomsList) {
 
@@ -36,7 +36,7 @@ public class AnalyticsCounter {
 	 * only one symptom at time Go through oneSymptom and count occurrences from
 	 * symptomList
 	 */
-	public List<String> occurrencesCounter(List<String> singleSymptomList, List<String> allSymptomListe) {
+	public List<String> countOccurrences(List<String> singleSymptomList, List<String> allSymptomListe) {
 		int symptomOccurrences = 0;
 		ArrayList<String> symptomWithdOccurences = new ArrayList<String>();
 		for (String str : singleSymptomList) {
