@@ -24,25 +24,24 @@ public class ReadSymptomDataFromFile implements SymptomReaderable {
 	}
 
 	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
+	public List<String> getSymptoms() throws IOException {
+
+		List<String> symptomListFromFile = new ArrayList<String>();
 
 		if (filepath != null) {
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(filepath));
-				String line = reader.readLine();
+			try (FileReader fileReader = new FileReader(filepath);
+					BufferedReader bufferReader = new BufferedReader(fileReader)) {
+				String line = bufferReader.readLine();
 
 				while (line != null) {
-					result.add(line);
-					line = reader.readLine();
+					symptomListFromFile.add(line);
+					line = bufferReader.readLine();
 				}
-				reader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+
 		}
 
-		return result;
+		return symptomListFromFile;
 	}
 
 }

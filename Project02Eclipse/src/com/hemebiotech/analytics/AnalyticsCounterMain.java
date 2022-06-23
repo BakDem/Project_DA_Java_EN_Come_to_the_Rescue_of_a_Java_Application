@@ -1,20 +1,27 @@
 package com.hemebiotech.analytics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This AnalyticsCounter Class is the main class of Analytics Project.
+ * 
+ */
 public class AnalyticsCounterMain {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile("symptoms.txt");
-		List<String> symptomList = reader.GetSymptoms(); // Get a list with all symptoms
+		List<String> symptomList = new ArrayList<String>();
 
-		AnalyticsCounter action = new AnalyticsCounter();
+		ReadSymptomDataFromFile readerSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
 
-		ArrayList<String> symptomWithdOccurences = new ArrayList<String>();
-		symptomWithdOccurences = (ArrayList<String>) action.countOccurrences(action.getSingleSymptom(symptomList),
-				symptomList);
+		// Get a list with all symptoms
+		symptomList = readerSymptomDataFromFile.getSymptoms();
 
-		action.writeSymptomOnFile(symptomWithdOccurences, "Result.out");
+		WriteSymptomDataOnFile writeSymptomDataOnFile = new WriteSymptomDataOnFile();
+
+		// write symptom with occurrences (symptom = occurrences) on Result.out.
+		writeSymptomDataOnFile.putSymptom(AnalyticsCounter.countOccurrences(symptomList), "results.out");
+
 	}
 }

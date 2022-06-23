@@ -1,69 +1,30 @@
 package com.hemebiotech.analytics;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * AnalyticsCounter a class with some methods.
- * 
- * Count all symptom occurrences.
- * 
- * write the symptom with their occurrences on a file.
+ * This AnalyticsCounter class is a class that count the symptom occurrences.
  * 
  */
 public class AnalyticsCounter {
 
 	/**
-	 * Method singleSymptom make a list with only one symptom. No duplicate of
-	 * symptom Return a list with only one symptom at time.
+	 * This method count the symptom occurrences from a list of symptom
+	 * 
+	 * @param allSymptomListe the symptom read from file.
+	 * @return Map of symptom and their occurrences.
 	 */
-	public List<String> getSingleSymptom(List<String> symptomsList) {
-		ArrayList<String> oneSymptomList = new ArrayList<String>();
-		for (String line : symptomsList) {
+	public static Map<String, Integer> countOccurrences(List<String> allSymptomListe) {
 
-			if (!oneSymptomList.contains(line)) {
-				oneSymptomList.add(line);
-			}
+		Map<String, Integer> symptomtMap = new TreeMap<String, Integer>();
+
+		for (String symptom : allSymptomListe) {
+			Integer occurrences = symptomtMap.get(symptom);
+			symptomtMap.put(symptom, (occurrences == null) ? 1 : occurrences + 1);
 		}
-		return oneSymptomList;
-	}
-
-	/**
-	 * Use ArrayList(symptomList) with all symptom and ArrayList(oneSymptom)with
-	 * only one symptom at time Go through oneSymptom and count occurrences from
-	 * symptomList
-	 */
-	public List<String> countOccurrences(List<String> singleSymptomList, List<String> allSymptomListe) {
-		int symptomOccurrences = 0;
-		ArrayList<String> symptomWithdOccurences = new ArrayList<String>();
-		for (String str : singleSymptomList) {
-			symptomOccurrences = Collections.frequency(allSymptomListe, str);
-			symptomWithdOccurences.add((str + " = " + symptomOccurrences + "\n"));
-		}
-		return symptomWithdOccurences;
-	}
-
-	/**
-	 * here Using FilleWriter Class to write on file Concatenate the symptom and
-	 * occurrences from a list and write it on the file.
-	 */
-	public void writeSymptomOnFile(ArrayList<String> symptomWithdOccurences, String file) {
-		try {
-			FileWriter writer = new FileWriter(file);
-
-			Collections.sort(symptomWithdOccurences);// sort the list into ascending order
-
-			for (String str : symptomWithdOccurences) {
-				writer.write(str);
-			}
-
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return symptomtMap;
 	}
 
 }
