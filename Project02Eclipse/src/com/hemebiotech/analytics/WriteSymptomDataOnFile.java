@@ -17,6 +17,8 @@ public class WriteSymptomDataOnFile implements SymptomWriterable {
 			for (Map.Entry<String, Integer> entry : listOfSymptomWithOccurrences.entrySet()) {
 				fileWriter.write(entry.getKey() + " = " + entry.getValue() + "\n");
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

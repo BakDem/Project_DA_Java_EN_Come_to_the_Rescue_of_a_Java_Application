@@ -26,7 +26,7 @@ public class ReadSymptomDataFromFile implements SymptomReaderable {
 	@Override
 	public List<String> getSymptoms() throws IOException {
 
-		List<String> symptomListFromFile = new ArrayList<String>();
+		List<String> symptomListFromFile = new ArrayList<>();
 
 		if (filepath != null) {
 			try (FileReader fileReader = new FileReader(filepath);
@@ -37,6 +37,8 @@ public class ReadSymptomDataFromFile implements SymptomReaderable {
 					symptomListFromFile.add(line);
 					line = bufferReader.readLine();
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 
 		}

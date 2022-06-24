@@ -11,17 +11,18 @@ import java.util.List;
 public class AnalyticsCounterMain {
 	public static void main(String[] args) throws IOException {
 
-		List<String> symptomList = new ArrayList<String>();
+		List<String> symptomList = new ArrayList<>();
 
-		ReadSymptomDataFromFile readerSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
+		SymptomReaderable readerSymptomDataFromFile = new ReadSymptomDataFromFile("symptoms.txt");
 
 		// Get a list with all symptoms
 		symptomList = readerSymptomDataFromFile.getSymptoms();
 
-		WriteSymptomDataOnFile writeSymptomDataOnFile = new WriteSymptomDataOnFile();
+		SymptomWriterable writeSymptomDataOnFile = new WriteSymptomDataOnFile();
 
 		// write symptom with occurrences (symptom = occurrences) on Result.out.
-		writeSymptomDataOnFile.putSymptom(AnalyticsCounter.countOccurrences(symptomList), "results.out");
+		AnalyticsCounter analyticsCounter = new AnalyticsCounter();
+		writeSymptomDataOnFile.putSymptom(analyticsCounter.countOccurrences(symptomList), "results.out");
 
 	}
 }

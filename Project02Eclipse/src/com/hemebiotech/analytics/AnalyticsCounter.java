@@ -16,9 +16,9 @@ public class AnalyticsCounter {
 	 * @param allSymptomListe the symptom read from file.
 	 * @return Map of symptom and their occurrences.
 	 */
-	public static Map<String, Integer> countOccurrences(List<String> allSymptomListe) {
+	public Map<String, Integer> countOccurrences(List<String> allSymptomListe) {
 
-		Map<String, Integer> symptomtMap = new TreeMap<String, Integer>();
+		Map<String, Integer> symptomtMap = new TreeMap<>();
 
 		for (String symptom : allSymptomListe) {
 			Integer occurrences = symptomtMap.get(symptom);
